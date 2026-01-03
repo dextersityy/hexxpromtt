@@ -2,14 +2,13 @@
 
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
-import { useAuth } from '@/hooks/use-auth';
+import { useUser, useLoginModal } from '@/firebase';
 import { Button } from '@/components/ui/button';
 import { UserNav } from '@/components/auth/user-nav';
-import { useLoginModal } from '@/components/providers/app-provider';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export function Header() {
-  const { user, loading } = useAuth();
+  const { user, loading } = useUser();
   const { showLoginModal } = useLoginModal();
 
   return (

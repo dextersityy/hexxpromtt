@@ -5,7 +5,7 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs";
 import { collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { db } from '@/firebase';
 import type { Prompt } from '@/lib/types';
 import PromptCard from "./prompt-card";
 import { Bot, Code, ImageIcon, Mic, Pencil } from "lucide-react";
@@ -20,7 +20,6 @@ async function getPrompts(category?: string): Promise<Prompt[]> {
                 promptsRef,
                 where('status', '==', 'approved'),
                 where('category', '==', category),
-                orderBy('createdAt', 'desc'),
                 limit(20)
             );
         } else {

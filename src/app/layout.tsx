@@ -2,10 +2,10 @@ import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
-import { AppProviders } from '@/components/providers/app-provider';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from '@/components/ui/toaster';
+import { FirebaseClientProvider } from '@/firebase';
 
 const fontBody = Inter({
   subsets: ['latin'],
@@ -41,14 +41,14 @@ export default function RootLayout({
           fontHeadline.variable
         )}
       >
-        <AppProviders>
+        <FirebaseClientProvider>
           <div className="relative flex min-h-dvh flex-col bg-background">
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
           <Toaster />
-        </AppProviders>
+        </FirebaseClientProvider>
       </body>
     </html>
   );

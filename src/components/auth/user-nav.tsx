@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { signOut } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { useAuth } from '@/firebase';
 import Link from 'next/link';
 import type { User } from '@/lib/types';
 import { CreditCard, LayoutDashboard, LogOut, Settings, Upload, User as UserIcon } from 'lucide-react';
@@ -23,6 +23,7 @@ interface UserNavProps {
 }
 
 export function UserNav({ user }: UserNavProps) {
+  const auth = useAuth();
   const getInitials = (name: string | null | undefined) => {
     if (!name) return 'U';
     const names = name.split(' ');

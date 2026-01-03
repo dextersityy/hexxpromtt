@@ -10,8 +10,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { GoogleIcon } from '@/components/icons';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/firebase';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -19,6 +19,7 @@ interface LoginModalProps {
 }
 
 export default function LoginModal({ isOpen, onOpenChange }: LoginModalProps) {
+  const auth = useAuth();
   const { toast } = useToast();
 
   const handleGoogleSignIn = async () => {
