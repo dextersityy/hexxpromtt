@@ -22,6 +22,10 @@ export const useUser = () => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    if (!auth || !db) {
+      // Firebase services might not be available yet.
+      return;
+    }
     const unsubscribe = onAuthStateChanged(
       auth,
       async (user) => {
@@ -32,7 +36,7 @@ export const useUser = () => {
             const docSnap = await getDoc(userRef);
     
             if (docSnap.exists()) {
-              setUser(docSnap.data() as AppUser);
+              setUser({ ...docSnap.data(), uid: docSnap.id } as AppUser);
             } else {
               // Create new user document
               const newUser: AppUser = {
@@ -41,6 +45,8 @@ export const useUser = () => {
                 email: user.email,
                 photoURL: user.photoURL,
                 role: 'user',
+                username: null,
+                onboarding_required: true,
                 stats: {
                   total_copies_received: 0,
                   followers: 0,

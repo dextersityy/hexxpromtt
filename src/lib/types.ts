@@ -2,10 +2,13 @@ import type { Timestamp } from 'firebase/firestore';
 
 export interface User {
   uid: string;
+  username: string | null;
   displayName: string | null;
   email: string | null;
   photoURL: string | null;
   role: 'user' | 'prompter' | 'mod' | 'admin';
+  onboarding_required?: boolean;
+  birthDate?: Timestamp;
   stats: {
     total_copies_received: number;
     followers: number;
