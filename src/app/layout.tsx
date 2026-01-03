@@ -18,7 +18,7 @@ const fontHeadline = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'Promptify',
+  title: 'PromptHub',
   description: 'Discover, share, and deploy amazing prompts for AI.',
 };
 
@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
