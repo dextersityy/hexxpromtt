@@ -56,10 +56,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return () => unsubscribe();
   }, []);
+  
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (loading && isClient) {
+    return <AuthLoader />;
+  }
 
   return (
     <AuthContext.Provider value={{ user, firebaseUser, loading }}>
-      {loading ? <AuthLoader /> : children}
+      {children}
     </AuthContext.Provider>
   );
 }
