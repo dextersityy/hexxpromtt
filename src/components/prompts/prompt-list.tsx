@@ -14,19 +14,23 @@ import Link from "next/link";
 async function getPrompts(category?: string): Promise<Prompt[]> {
     try {
         const promptsRef = collection(db, 'prompts');
-        const q = category 
-            ? query(
+        let q;
+        if (category && category !== 'trending') {
+            q = query(
                 promptsRef,
                 where('status', '==', 'approved'),
                 where('category', '==', category),
                 orderBy('createdAt', 'desc'),
                 limit(20)
-            ) : query(
+            );
+        } else {
+            q = query(
                 promptsRef,
                 where('status', '==', 'approved'),
                 orderBy('metrics.copies', 'desc'),
                 limit(6)
             );
+        }
 
         const querySnapshot = await getDocs(q);
         const prompts = querySnapshot.docs.map(doc => ({
@@ -37,6 +41,12 @@ async function getPrompts(category?: string): Promise<Prompt[]> {
         return prompts;
     } catch (error) {
         console.error("Error fetching prompts: ", error);
+        // The query for categories requires an index. For now, we'll just return an empty array to avoid crashing.
+        // In a real app, you'd create the index in Firestore.
+        if ((error as any).code === 'failed-precondition') {
+            console.warn("Firestore index not found. Returning empty prompts for category.");
+            return [];
+        }
         return [];
     }
 }
@@ -52,7 +62,7 @@ const categories = [
 ];
 
 export default async function PromptList() {
-    const trendingPrompts = await getPrompts();
+    const trendingPrompts = await getPrompts('trending');
     
     const promptsByCategory = await Promise.all(
         categories.slice(1).map(async (cat) => {
