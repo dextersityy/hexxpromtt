@@ -23,19 +23,28 @@ export default function LoginModal({ isOpen, onOpenChange }: LoginModalProps) {
   const { toast } = useToast();
 
   const handleGoogleSignIn = async () => {
+    if (!auth) {
+      console.error("Firebase Auth is not initialized.");
+      toast({
+        title: 'Error',
+        description: 'Authentication service is not ready. Please try again later.',
+        variant: 'destructive',
+      });
+      return;
+    }
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
       onOpenChange(false);
       toast({
-        title: 'Successfully logged in!',
-        description: 'Welcome to Promptify.',
+        title: 'Login Successful!',
+        description: "Welcome to PromptHub!",
       });
-    } catch (error) {
-      console.error('Error signing in with Google: ', error);
+    } catch (error: any) {
+      console.error('Google Sign-In Error:', error);
       toast({
         title: 'Authentication Failed',
-        description: 'Could not sign you in with Google. Please try again.',
+        description: error.message || 'Could not sign you in with Google. Please try again.',
         variant: 'destructive',
       });
     }
@@ -45,9 +54,9 @@ export default function LoginModal({ isOpen, onOpenChange }: LoginModalProps) {
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl text-center font-headline">Join Promptify</DialogTitle>
+          <DialogTitle className="text-2xl text-center font-headline">Join PromptHub</DialogTitle>
           <DialogDescription className="text-center">
-            Sign in to copy, share, and like prompts.
+            Sign in to create, share, and like prompts.
           </DialogDescription>
         </DialogHeader>
         <div className="py-4">

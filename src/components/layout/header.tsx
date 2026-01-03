@@ -19,16 +19,16 @@ export function Header() {
             <Logo />
           </Link>
           <nav className="hidden md:flex gap-6 text-sm font-medium text-muted-foreground">
-            <Link href="#" className="hover:text-primary">Home</Link>
-            <Link href="#" className="hover:text-primary">Explore</Link>
-            <Link href="#" className="hover:text-primary">Community</Link>
-            <Link href="#" className="hover:text-primary">Pricing</Link>
+            <Link href="/" className="hover:text-primary">Home</Link>
+            <Link href="/explore" className="hover:text-primary">Explore</Link>
+            <Link href="/community" className="hover:text-primary">Community</Link>
+            <Link href="/pricing" className="hover:text-primary">Pricing</Link>
           </nav>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-2">
             {loading ? (
-              <Skeleton className="h-8 w-20" />
+              <Skeleton className="h-9 w-24" />
             ) : user ? (
               <UserNav user={user} />
             ) : (
