@@ -34,6 +34,7 @@ let app: FirebaseApp;
 let auth: Auth;
 let db: Firestore;
 
+// This check is to prevent re-initializing the app on the client.
 if (getApps().length === 0) {
   app = initializeApp(firebaseConfig);
 } else {

@@ -1,5 +1,8 @@
 import { FirebaseOptions } from "firebase/app";
 
+// This configuration is used for both client and server-side rendering.
+// NEXT_PUBLIC_FIREBASE_API_KEY is exposed to the browser and populated
+// from .env.local file.
 export const firebaseConfig: FirebaseOptions = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
     authDomain: "hexprompt.firebaseapp.com",
